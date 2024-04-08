@@ -4,6 +4,10 @@
       "label": "Slika"
     },
     {
+      "label": "Označi kot dekorativno",
+      "description": "Oznaka opredeljuje sliko kot okrasno, ki ne dodaja vsebinskih informacij. Bralnik zaslona jo lahko zato prezre in ne posredujejo alternativnega besedila."
+    },
+    {
       "label": "Nadomestno besedilo",
       "description": "Zahtevano. Besedilo se prikaže, če spletni brskalnik ne more naložiti slike. Besedilo uporabljajo tudi \"sintetizatorji govora\" (text-to-speech readers)."
     },
@@ -14,6 +18,14 @@
     {
       "label": "Naslov vsebine slike",
       "default": "Slika"
+    },
+    {
+      "label": "Expand Image",
+      "default": "Expand Image"
+    },
+    {
+      "label": "Minimize Image",
+      "default": "Minimize Image"
     }
   ]
 }

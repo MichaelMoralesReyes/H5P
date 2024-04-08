@@ -21,10 +21,12 @@ var H5P = H5P || {};
       this.height = params.file.height;
     }
 
-    this.alt = params.alt !== undefined ? params.alt : 'New image';
+    this.alt = (!params.decorative && params.alt !== undefined) ?
+      this.stripHTML(this.htmlDecode(params.alt)) :
+      '';
 
     if (params.title !== undefined) {
-      this.title = params.title;
+      this.title = this.stripHTML(this.htmlDecode(params.title));
     }
   };
 
@@ -48,8 +50,10 @@ var H5P = H5P || {};
           height: '100%',
           class: 'h5p-placeholder',
           title: this.title === undefined ? '' : this.title,
-          load: function () {
-            self.trigger('loaded');
+          on: {
+            load: function () {
+              self.trigger('loaded');
+            }
           }
         });
       } else {
@@ -59,14 +63,39 @@ var H5P = H5P || {};
           src: source,
           alt: this.alt,
           title: this.title === undefined ? '' : this.title,
-          load: function () {
-            self.trigger('loaded');
+          on: {
+            load: function () {
+              self.trigger('loaded');
+            }
           }
         });
       }
     }
 
     $wrapper.addClass('h5p-image').html(self.$img);
+  };
+
+  /**
+   * Retrieve decoded HTML encoded string.
+   *
+   * @param {string} input HTML encoded string.
+   * @returns {string} Decoded string.
+   */
+  H5P.Image.prototype.htmlDecode = function (input) {
+    const dparser = new DOMParser().parseFromString(input, 'text/html');
+    return dparser.documentElement.textContent;
+  };
+
+  /**
+   * Retrieve string without HTML tags.
+   *
+   * @param {string} input Input string.
+   * @returns {string} Output string.
+   */
+  H5P.Image.prototype.stripHTML = function (html) {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent || div.innerText || '';
   };
 
   return H5P.Image;
